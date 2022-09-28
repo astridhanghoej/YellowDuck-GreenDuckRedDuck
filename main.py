@@ -1,26 +1,26 @@
 def duckRows():
-    global myTileFill, rowCounter
-    if rowCounter < 10:
-        for index in range(10):
+    pass
+def duckFiller():
+    global myTileFill
+    for index1 in range(5):
+        for index2 in range(5):
             myTileFill = sprites.create(assets.image("""
                 redDuck
             """), SpriteKind.food)
-            myTileFill.set_position(index * 16 + 8, rowCounter * 16 + 8)
-        rowCounter += 1
-        duckRows()
-    else:
-        pass
-def duckFiller():
-    global rowCounter
-    rowCounter = 0
-    duckRows()
+            myTileFill.set_position(index1 * 16 + 8, index2 * 16 + 8)
+
+def on_on_overlap(sprite, otherSprite):
+    otherSprite.set_image(assets.image("""
+        greenDuck
+    """))
+sprites.on_overlap(SpriteKind.player, SpriteKind.food, on_on_overlap)
+
 myTileFill: Sprite = None
-rowCounter = 0
-mySprite = sprites.create(assets.image("""
-    yellowDuck
-"""), SpriteKind.player)
-controller.move_sprite(mySprite)
 tiles.set_current_tilemap(tilemap("""
     level1
 """))
 duckFiller()
+mySprite = sprites.create(assets.image("""
+    yellowDuck
+"""), SpriteKind.player)
+controller.move_sprite(mySprite)
